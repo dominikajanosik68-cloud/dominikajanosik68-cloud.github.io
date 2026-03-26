@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dominika Janosik - Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+/* --- NOWY MROCZNY DESIGN Z TWOIM TŁEM --- */
+:root {
+  --bg-darkest: #030303;
+  --bg-dark: #0a0a0a;
+  --bg-graphite: #121212;
+  --text-primary: #f0f0f0;
+  --text-muted: #888888;
+}
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--bg-darkest);
+  color: var(--text-primary);
+  line-height: 1.8;
+  overflow-x: hidden;
+  font-size: 16px;
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+  letter-spacing: 4px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* TWOJE TŁO (tło.png) - Porozmieszczane dynamicznie */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  pointer-events: none;
+  background-color: var(--bg-darkest);
+  
+  /* Ładujemy Twój plik 3 razy w różnych miejscach dla efektu rozsiania */
+  background-image: 
+    url('tło.png'),
+    url('tło.png'),
+    url('tło.png');
+    
+  /* Pozycje: lewa góra, prawy dół i środek ekranu */
+  background-position: 
+    left -100px top 50px, 
+    right -150px bottom 100px, 
+    center center;
+    
+  /* Rozmiary: jedno duże, jedno średnie, jedno powtarzające się ogromne */
+  background-size: 
+    500px, 
+    700px, 
+    1200px;
+    
+  /* Środkowe lekko się powtarza, boczne są statyczne */
+  background-repeat: 
+    no-repeat, 
+    no-repeat, 
+    repeat; 
+    
+  /* Przezroczystość wzorów (0.3 to 30% widoczności). */
+  opacity: 0.3; 
+}
+
+/* HERO */
+.hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background: transparent;
+}
+
+.hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center; 
+  filter: brightness(40%) contrast(120%) grayscale(20%);
+  display: block;
+}
+
+.hero img[alt]:not([src]), .hero img[src=""] {
+    display: none;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.portfolio {
+  position: absolute;
+  font-size: 25vw; 
+  color: rgba(255,255,255,0.03);
+  letter-spacing: 1vw;
+  pointer-events: none;
+  font-weight: 700;
+  line-height: 0.8;
+  white-space: nowrap;
+}
+
+.hero-text {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-text h1 {
+  font-size: 70px;
+  margin-bottom: 15px;
+  position: relative;
+  display: inline-block;
+  text-shadow: 0 5px 20px rgba(0,0,0,0.8);
+}
+
+.hero-text p {
+  letter-spacing: 8px;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+/* SEKCJE */
+.section {
+  padding: 150px 10%;
+  position: relative;
+}
+
+.section h2 {
+  font-size: 32px;
+  color: var(--text-primary);
+  display: inline-block;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  padding-bottom: 10px;
+}
+
+.light {
+  /* Lekko przezroczyste, by ładnie przebijały przez to Twoje wzory z tła! */
+  background: rgba(18, 18, 18, 0.85); 
+  color: var(--text-primary);
+  border-top: 1px solid rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  backdrop-filter: blur(5px);
+}
+.light a { color: var(--text-primary) !important; }
+
+/* BANERY ZE ZDJĘCIAMI */
+.image-banner {
+  position: relative;
+  height: 60vh; 
+  min-height: 500px;
+  overflow: hidden;
+  background: var(--bg-dark);
+}
+
+.image-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center; 
+  filter: brightness(35%) grayscale(30%); 
+  display: block;
+  transition: transform 1s ease;
+}
+.image-banner:hover img {
+    transform: scale(1.02);
+}
+
+.image-banner img.portrait-banner { object-position: center 55%; }
+.image-banner img.beauty-banner { object-position: center 30%; }
+
+.banner-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 800px;
+  text-align: center;
+  width: 90%;
+}
+
+.banner-text p {
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 2;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.9);
+}
+
+/* WYMIARY */
+.measure-section {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.measure-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px; 
+}
+
+.measure-grid img {
+  width: 100%;
+  height: auto; 
+  border-radius: 2px;
+  display: block;
+  cursor: pointer;
+  filter: brightness(80%);
+  transition: 0.4s;
+}
+.measure-grid img:hover { filter: brightness(110%); }
+
+.measure-text p {
+  line-height: 2.2;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+/* GALERIA */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px; 
+  align-items: start; 
+}
+
+.gallery img {
+  width: 100%;
+  height: auto; 
+  border-radius: 2px;
+  transition: all 0.5s ease;
+  display: block;
+  cursor: pointer;
+  filter: brightness(70%) saturate(80%); 
+}
+
+.gallery img:hover {
+  transform: scale(1.03);
+  filter: brightness(110%) saturate(100%); 
+  box-shadow: 0 20px 40px rgba(0,0,0,0.9);
+  z-index: 10;
+  position: relative;
+}
+
+/* WSPÓŁPRACE */
+.collab-container {
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+}
+
+.collab-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.collab-images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.collab-images img,
+.collab-images video {
+  width: 100%;
+  height: auto;
+  border-radius: 2px;
+  display: block;
+  cursor: pointer;
+  object-fit: cover;
+  filter: brightness(80%);
+  transition: 0.3s;
+}
+.collab-images img:hover, .collab-images video:hover {
+    filter: brightness(100%);
+}
+
+.collab-text h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  margin-top: 0;
+  margin-bottom: 15px;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+}
+
+.collab-text a {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 1px solid var(--text-primary);
+  transition: 0.3s;
+}
+
+.collab-text a:hover {
+  color: #fff;
+  border-bottom-color: transparent;
+}
+
+.collab-text p {
+    font-weight: 300;
+}
+
+/* KONTAKT */
+.contact {
+  text-align: center;
+  font-size: 18px;
+  padding-bottom: 100px;
+}
+.contact p { margin: 10px 0; font-weight: 300; letter-spacing: 1px; }
+.contact a { color: white; text-decoration: none; border-bottom: 1px dotted white;}
+
+/* LIGHTBOX */
+.lightbox {
+  display: none; 
+  position: fixed;
+  z-index: 9999; 
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.98); 
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
+}
+
+.lightbox img {
+  max-width: 95%;
+  max-height: 95vh; 
+  object-fit: contain; 
+  border-radius: 0px;
+  box-shadow: 0 0 50px rgba(0,0,0,1);
+}
+
+.close-lightbox {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  color: rgba(255,255,255,0.5);
+  font-size: 60px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.close-lightbox:hover {
+  color: #fff;
+}
+
+/* MOBILE */
+@media(max-width: 900px) {
+  .portfolio { font-size: 35vw; top: 20%; opacity: 0.05;}
+  .hero-text h1 { font-size: 40px; }
+  .measure-section { grid-template-columns: 1fr; gap: 40px; }
+  .gallery { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .collab-row { grid-template-columns: 1fr; gap: 30px; }
+  .close-lightbox { top: 10px; right: 20px; font-size: 40px; }
+  .section { padding: 80px 5%; }
+  .banner-text p { font-size: 16px; }
+}
+</style>
+
+</head>
+
+<body>
+
+<section class="hero">
+  <img src="hero.jpg" alt="" onerror="this.style.display='none'">
+  <div class="hero-overlay">
+    <h1 class="portfolio">PORTFOLIO</h1>
+    <div class="hero-text">
+      <h1>Dominika Janosik</h1>
+      <p>FOTOMODELKA</p>
+    </div>
+  </div>
+</section>
+
+<section class="image-banner">
+  <img src="ziebik-263 (1).jpeg" alt="O mnie" class="portrait-banner">
+  <div class="banner-text">
+    <p>
+      Jestem fotomodelką o charakterystycznym wyglądzie z doświadczeniem w pracy przed obiektywem.  
+      Wyróżnia mnie bardzo dobra kontrola ciała i świadomość ruchu rozwijana poprzez pole dance i kalistenikę.  
+      Samodzielnie przygotowuję się do sesji, w tym wykonuję makijaż.
+    </p>
+  </div>
+</section>
+
+<section class="section light">
+  <div class="measure-section">
+    <div class="measure-grid">
+      <img src="27CA28DE-27F0-4549-999E-23935DFA2FCB.png" alt="Wymiary 1">
+      <img src="706C1AE6-8C19-4C30-BB52-C718EAF43638.png" alt="Wymiary 2">
+      <img src="DSC_3107.jpeg" alt="Wymiary 3">
+      <img src="DSC_3105.jpeg" alt="Wymiary 4">
+    </div>
+    <div class="measure-text">
+      <h2>WYMIARY</h2>
+      <p>
+        ur. 2003<br>
+        163 cm<br>
+        78–62–88<br>
+        XS<br>
+        but 37<br>
+        49 kg<br>
+        oczy brązowe<br>
+        włosy czarno-białe
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="image-banner">
+  <img src="_JSZ0115.jpeg" alt="Piękno" class="beauty-banner">
+  <div class="banner-text">
+    <h2>PIĘKNO W OBIEKTYWIE</h2>
+    <p>
+      Jako fotomodelka z Krakowa tworzę nowoczesne, estetyczne i przyciągające uwagę ujęcia idealne do kampanii reklamowych i wizerunkowych.  
+      Stawiam na kreatywność, profesjonalizm i emocje w każdym kadrze.  
+      Chętnie podejmę współpracę z markami, fotografami i agencjami.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <h2 style="text-align:center;margin-bottom:60px;display:block;border:none;">GALERIA</h2>
+  <div class="gallery">
+    <img src="_DSC3852.jpeg" alt="Galeria 1">
+    <img src="_DSC3863.jpeg" alt="Galeria 2">
+    <img src="107DB5AC-980E-4CEE-930F-00B6F5111F76.png" alt="Galeria 3">
+    <img src="B0004702.jpeg" alt="Galeria 4">
+    <img src="350E232B-EE8B-4105-B30F-6B7579FDB151.jpeg" alt="Galeria 5">
+    <img src="DSC_0227.jpeg" alt="Galeria 6">
+    <img src="DSC_0440.jpeg" alt="Galeria 7">
+    <img src="DSC_9282.jpg" alt="Galeria 8">
+    <img src="DSC_0785.jpeg" alt="Galeria 9">
+    <img src="2C5FB147-FF83-4CED-B1D8-23891906B10A.jpeg" alt="Galeria 10">
+    <img src="4A427091-FB33-4C77-94E8-E75134FD6214.jpg" alt="Galeria 11">
+    <img src="DSC_9925.jpg" alt="Galeria 12">
+    <img src="DSC_9361.jpeg" alt="Galeria 13">
+    <img src="DSC_9812.jpg" alt="Galeria 14">
+    <img src="Plik – 2025-11-16T12_40_58 (1).jpeg" alt="Galeria 15">
+    <img src="Plik – 2025-11-16T12_40_58.jpeg" alt="Galeria 16">
+    <img src="ziebik-265 (4).jpeg" alt="Galeria 17">
+    <img src="DSC_8738.jpeg" alt="Galeria 18">
+    <img src="IMG_4941.jpeg" alt="Galeria 19">
+    <img src="DSC_8755.jpeg" alt="Galeria 20">
+    <img src="IMG_6029.jpeg" alt="Galeria 21">
+    <img src="IMG_6046.jpeg" alt="Galeria 22">
+  </div>
+</section>
+
+<section class="section light">
+  <h2 style="text-align:center;margin-bottom:60px;display:block;border:none;">WSPÓŁPRACE / OSIĄGNIĘCIA</h2>
+  
+  <div class="collab-container">
+    
+    <div class="collab-row">
+      <div class="collab-images">
+        <img src="IMG_7746.jpeg" alt="Osiągnięcia 1">
+        <img src="BE0977A2-BB64-4639-934C-833FD105A289.jpeg" alt="Osiągnięcia 2">
+      </div>
+      <div class="collab-text">
+        <h3>Współpraca z <a href="https://instagram.com/docianphoto" target="_blank">@docianphoto</a></h3>
+        <p>testowanie innowacyjnego robienia "zdjęć po klatce"</p>
+      </div>
+    </div>
+
+    <div class="collab-row">
+      <div class="collab-images" style="grid-template-columns: 1fr;">
+        <img src="att.GflrhAJFuZsEmINO3ooEMR7yhs1eb2_qzgtPtz2uo3c.jpeg" alt="Sesja Lata 20">
+      </div>
+      <div class="collab-text">
+        <h3>Współpraca z <a href="https://instagram.com/przemyslawtraliszewski" target="_blank">@przemysławtraliszewski</a></h3>
+        <p>Klimatyczna sesja w stylu lat 20. Pociąg, perły i niesamowity retro klimat.</p>
+      </div>
+    </div>
+
+    <div class="collab-row">
+      <div class="collab-images" style="grid-template-columns: 1fr;">
+        <video src="Witch_1.mp4" autoplay loop muted playsinline></video>
+      </div>
+      <div class="collab-text">
+        <h3>Współpraca z <a href="https://instagram.com/anielso" target="_blank">@anielso</a></h3>
+        <p>Projekt Witch. Świetna energia na planie i niesamowite efekty końcowe widoczne na filmie.</p>
+      </div>
+    </div>
+
+    <div class="collab-row">
+      <div class="collab-images" style="grid-template-columns: 1fr;">
+        <img src="IMG_8285.jpeg" alt="Projekt Black and Gold">
+      </div>
+      <div class="collab-text">
+        <h3>Współpraca z <a href="https://instagram.com/hm_fotografia_krk" target="_blank">@hm_fotografia_krk</a></h3>
+        <p>Projekt Black and Gold nowo otwartego studia fotograficznego</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section contact">
+  <h2 style="border:none;">KONTAKT</h2>
+  <p>✉️ dominikajanosik68@gmail.com</p>
+  <p>☎️ 660214221</p>
+  <p>📷 Instagram: <a href="https://instagram.com/janosiq_x" target="_blank">janosiq_x</a></p>
+</section>
+
+<div id="lightbox" class="lightbox">
+  <span class="close-lightbox">&times;</span>
+  <img id="lightbox-img" src="">
+</div>
+
+<script>
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const images = document.querySelectorAll('.gallery img, .measure-grid img, .collab-images img');
+  const closeBtn = document.querySelector('.close-lightbox');
+
+  images.forEach(img => {
+    img.addEventListener('click', () => {
+      lightbox.style.display = 'flex';
+      lightboxImg.src = img.src; 
+    });
+  });
+
+  closeBtn.addEventListener('click', () => {
+    lightbox.style.display = 'none';
+  });
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target !== lightboxImg) {
+      lightbox.style.display = 'none';
+    }
+  });
+</script>
+
+</body>
+</html>
